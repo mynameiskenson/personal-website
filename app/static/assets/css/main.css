@@ -47,6 +47,29 @@ ul.list-inline a {
             color: inherit;  /* Inherit the text color */
         }
 
+#navigator {
+    background-color: rgba(0, 0, 0, 0); /* semi-transparent background over video */
+    backdrop-filter: blur(5px); /* optional blur behind text */
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.nav-link {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: white !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #776d64 !important;
+}
+
+.nav-link.active {
+    border-bottom: 2px solid white;
+    font-weight: bold;
+}
+
 @media (min-width: 768px) {
     .profile-wrapper {
         width: 200px;
