@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Home - Kenson Manduyag{% endblock %}
+{% block content %}
+<div class="profile-wrapper mx-auto mb-3">
+    <img alt="Profile Picture" class="profile-picture"
+         src="{{ url_for('static', filename='assets/css/images/profile_picture.jpg') }}">
+    <img alt="Animated PNG" class="profile-frame"
+         src="{{ url_for('static', filename='assets/css/images/profile_frame.png') }}">
+</div>
+<h1 class="fw-bold" style="font-family: 'Space Mono', sans-serif;">Kenson Manduyag</h1>
+<p class="lead">Software Developer &nbsp;&bull;&nbsp; Photographer &nbsp;&bull;&nbsp; Gamer</p>
+<nav>
+    <ul class="list-inline">
+        <li class="list-inline-item mx-3">
+            <a class="fab fa-facebook-f fa-2x" href="https://www.facebook.com/kvnianmndyg"><span
+                    class="visually-hidden">Facebook</span></a>
+        </li>
+        <li class="list-inline-item mx-3">
+            <a class="fab fa-linkedin fa-2x" href="https://www.linkedin.com/in/kensonmanduyag/"><span
+                    class="visually-hidden">LinkedIn</span></a>
+        </li>
+        <li class="list-inline-item mx-3">
+            <a class="fab fa-github fa-2x" href="https://github.com/mynameiskenson"><span
+                    class="visually-hidden">GitHub</span></a>
+        </li>
+        <li class="list-inline-item mx-3">
+            <a class="fas fa-envelope fa-2x" href="mailto:kvniancrndo@gmail.com"><span
+                    class="visually-hidden">Email</span></a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}
