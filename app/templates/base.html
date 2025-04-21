@@ -91,11 +91,12 @@ function loadPage(url, pushState = true) {
         });
 }
 
-document.querySelectorAll('[data-nav]').forEach(link => {
-    link.addEventListener('click', function (e) {
+document.addEventListener('click', function (e) {
+    const link = e.target.closest('[data-nav]');
+    if (link) {
         e.preventDefault();
-        loadPage(this.href);
-    });
+        loadPage(link.href);
+    }
 });
 
 window.addEventListener('popstate', () => {

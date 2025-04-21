@@ -1,5 +1,28 @@
 {% extends "base.html" %}
 {% block title %}Blog - Kenson Manduyag{% endblock %}
 {% block content %}
-<h1>This is Blog</h1>
+<h1 class="page-title">Kenson's Blog</h1>
+<p class="page-subtitle">A space for shared experiences, connection with the world, and growth.</p>
+
+<div class="row mx-auto col-lg-8 col-md-10">
+  {% for post in posts %}
+  <div class="post-preview">
+    <a href="{{ url_for('blog.get_post', post_id=post.id) }}" class="post-link" data-nav
+   data-path="{{ url_for('blog.get_post', post_id=post.id) }}">
+      <h2 class="post-title">{{ post.title }}</h2>
+      <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+    </a>
+    <p class="post-meta">Posted by
+      <a href="#" class="post-author" style="color: #af3527; font-weight: bold;">{{ post.author }}</a>
+      on <span class="post-date" style="font-weight: bold;">{{ post.date_add }}</span></p>
+  </div>
+  {% endfor %}
+
+  <!-- Pager -->
+  <div class="clearfix">
+    <a class="btn custom-btn float-right" href="#">Older Posts &rarr;</a>
+  </div>
+</div>
+
+  <hr>
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Post - Kenson Manduyag{% endblock %}
+{% block content %}
+<div class="post-content">
+    <div class="post-header mx-auto col-lg-8 col-md-10">
+        <h1 class="page-post-title" style="font-weight: bold;">{{ post.title }}</h1>
+        <h2 class="page-post-subtitle" style="font-weight: 1px;">{{ post.subtitle }}</h2>
+        <p class="post-meta mb-4">
+            Posted by
+            <a class="post-author" href="#" style="color: #af3527; font-weight: bold;">{{ post.author }}</a>
+            on <span class="post-date" style="font-weight: bold;">{{ post.date_add }}</span>
+        </p>
+    </div>
+
+    <div class="row mx-auto col-lg-8 col-md-10">
+        {{ post.body }}
+    </div>
+</div>
+{% endblock %}
