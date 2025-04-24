@@ -84,6 +84,9 @@ celerybeat-schedule
 venv/
 ENV/
 
+# Ignore the migrations folder
+migrations/
+
 # Spyder project settings
 .spyderproject
 
