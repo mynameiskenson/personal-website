@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request
 from datetime import datetime
+from app.extensions import db
 import requests
+
+# IMPORT MODELS
+from app.models.blog_post import BlogPost
 
 main = Blueprint("main", __name__)
 
@@ -18,7 +22,11 @@ def portfolios():
 
 @main.route("/blog")
 def blog():
-    result = requests.get("https://api.npoint.io/e50d77e510f3fb462bb2")
-    result.raise_for_status()
-    _posts = result.json()
+    # FOR DEBUGGING
+    # result = requests.get("https://api.npoint.io/e50d77e510f3fb462bb2")
+    # result.raise_for_status()
+    # _posts = result.json()
+
+    result = db.session.execute(db.select(BlogPost))
+    _posts = result.scalars().all()
     return render_template("blog.html", posts=_posts)

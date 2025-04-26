@@ -9,12 +9,12 @@
         <p class="post-meta mb-4">
             Posted by
             <a class="post-author" href="#" style="color: #af3527; font-weight: bold;">{{ post.author }}</a>
-            on <span class="post-date" style="font-weight: bold;">{{ post.date_add }}</span>
+            on <span class="post-date" style="font-weight: bold;">{{ post.created_at }}</span>
         </p>
     </div>
 
     <div class="row">
-        {{ post.body }}
+        {{ post.body | safe }}
 
         <div class="post-comments">
             <hr>

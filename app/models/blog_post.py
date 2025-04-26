@@ -9,5 +9,6 @@ class BlogPost(db.Model):
     id : Mapped[int] = mapped_column(Integer, primary_key=True)
     title: Mapped[str] = mapped_column(String(250), nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
+    author: Mapped[str] = mapped_column(String(250), nullable=False)
     created_at: Mapped[dt.datetime] = mapped_column(DateTime, nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
