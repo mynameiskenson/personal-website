@@ -14,7 +14,10 @@
     </a>
     <p class="post-meta">Posted by
       <a href="#" class="post-author" style="color: #af3527; font-weight: bold;">{{ post.author }}</a>
-      on <span class="post-date" style="font-weight: bold;">{{ post.created_at }}</span></p>
+      on <span class="post-date" style="font-weight: bold;">{{ post.created_at.strftime('%b %d, %Y at %I:%M %p') }}</span>
+      <a href="{{url_for('blog.delete_post', post_id=post.id)}}" style="color: grey; font-weight: bold;"><i class="bi bi-trash"></i></a>
+    </p>
+
   </div>
   {% endfor %}
 

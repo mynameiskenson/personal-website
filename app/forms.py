@@ -13,7 +13,6 @@ class CreatePostForm(FlaskForm):
     submit = SubmitField("POST!", render_kw={"class": "btn custom-btn float-right"})
 
 
-# TODO: Create a RegisterForm to register new users
 class RegisterForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
@@ -21,13 +20,12 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("SIGN ME UP!")
 
 
-# TODO: Create a LoginForm to login existing users
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
-    submit = SubmitField("LET ME IN!")
+    submit = SubmitField("LET ME IN!", render_kw={"class": "btn custom-btn"})
 
-# TODO: Create a CommentForm so users can leave comments below posts
+
 class CommentForm(FlaskForm):
     comment_body = CKEditorField("Comment", validators=[DataRequired()])
     submit = SubmitField("SUBMIT COMMENT", render_kw={"class": "btn custom-btn float-right"})

@@ -27,6 +27,7 @@ def create_app():
     # IMPORT MODELS
     with app.app_context():
         from app.models.blog_post import BlogPost
+        from app.models.user import User
 
     app.register_blueprint(main)
     app.register_blueprint(blog)
