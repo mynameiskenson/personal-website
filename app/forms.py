@@ -17,7 +17,7 @@ class RegisterForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     name = StringField("Name", validators=[DataRequired()])
-    submit = SubmitField("SIGN ME UP!")
+    submit = SubmitField("SIGN ME UP!", render_kw={"class": "btn custom-btn"})
 
 
 class LoginForm(FlaskForm):

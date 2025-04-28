@@ -1,12 +1,9 @@
 from flask import Flask
-from flask_bootstrap import Bootstrap5
-from flask_ckeditor import CKEditor
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from dotenv import load_dotenv
+from sqlalchemy import select
 
 # EXTENSIONS
-from .extensions import db, migrate, ckeditor, bootstrap
+from .extensions import db, migrate, ckeditor, bootstrap, login_manager
 
 # ROUTES
 from .routes.main_routes import main
@@ -23,6 +20,7 @@ def create_app():
     migrate.init_app(app, db)
     ckeditor.init_app(app)
     bootstrap.init_app(app)
+    login_manager.init_app(app)
 
     # IMPORT MODELS
     with app.app_context():
@@ -31,5 +29,9 @@ def create_app():
 
     app.register_blueprint(main)
     app.register_blueprint(blog)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return db.session.execute(select(User).where(User.id == user_id)).scalar()
 
     return app

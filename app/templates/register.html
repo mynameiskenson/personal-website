@@ -1,0 +1,11 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% extends "base.html" %}
+{% block title %}Register - Kenson Manduyag{% endblock %}
+{% block content %}
+<h1 class="page-title">Register</h1>
+<p class="page-subtitle">Contribute your voice</p>
+
+<div class="row mx-auto col-lg-6 col-md-8" style="text-align: left;">
+    {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+</div>
+{% endblock %}

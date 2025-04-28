@@ -1,6 +1,11 @@
+from functools import wraps
+
 from flask import Blueprint, render_template, request, url_for
 from datetime import datetime
+
+from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
+from flask_login import login_required, current_user
 
 from app.forms import CreatePostForm, CommentForm
 from app.extensions import db
@@ -10,6 +15,16 @@ import requests
 from app.models.blog_post import BlogPost
 
 blog = Blueprint("blog", __name__)
+
+# ADMIN ONLY
+def admin_only(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if current_user.id != 1:
+            return abort(403)
+        return func(*args, **kwargs)
+
+    return decorated_function
 
 @blog.app_context_processor
 def inject_year():
@@ -30,15 +45,16 @@ def get_post(post_id):
         _post = db.get_or_404(BlogPost, post_id)
         return render_template("post.html", post=_post, comment_form=cf)
 
-
-@blog.route("/make-post", methods=["POST"])
+@blog.route("/make-post", methods=["GET", "POST"])
+@login_required
+@admin_only
 def add_new_post():
     cpf = CreatePostForm()
     if cpf.validate_on_submit():
         new_post =BlogPost(
             title=cpf.title.data,
             subtitle=cpf.subtitle.data,
-            author="Kenson Manduyag",
+            author_id=current_user.id,
             created_at=datetime.now(),
             body=cpf.body.data
         )
@@ -48,12 +64,14 @@ def add_new_post():
     return render_template("make-post.html", post_form=cpf)
 
 @blog.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+@login_required
+@admin_only
 def edit_post(post_id):
     _post = db.get_or_404(BlogPost, post_id)
     edit_form = CreatePostForm(
         title=_post.title,
         subtitle=_post.subtitle,
-        author="Kenson Manduyag",
+        author_id=current_user.id,
         created_at=datetime.now(),
         body=_post.body
     )
@@ -68,6 +86,8 @@ def edit_post(post_id):
     return render_template("make-post.html", post_form=edit_form, is_edit=True)
 
 @blog.route("/delete-post/<int:post_id>", methods=["GET"])
+@login_required
+@admin_only
 def delete_post(post_id):
     _post = db.get_or_404(BlogPost, post_id)
     db.session.delete(_post)
