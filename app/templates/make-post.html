@@ -1,8 +1,8 @@
 {% from "bootstrap5/form.html" import render_form %}
 {% extends "base.html" %}
-{% block title %}Create Post - Kenson Manduyag{% endblock %}
+{% block title %}{% if is_edit: %}Edit{% else: %}Create{% endif %} Post - Kenson Manduyag{% endblock %}
 {% block content %}
-<h1 class="page-title">Create New Post</h1>
+<h1 class="page-title">{% if is_edit: %}Edit{% else: %}Create New{% endif %} Post</h1>
 <p class="page-subtitle">Your Voice, Your Space</p>
 
 <div class="row mx-auto col-lg-8 col-md-10" style="text-align: left;">

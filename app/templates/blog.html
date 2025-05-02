@@ -25,7 +25,8 @@
 
   <!-- Pager -->
   <div class="clearfix">
-    <a class="btn custom-btn float-right" href="#">Older Posts &rarr;</a>
+    <a class="btn custom-btn float-right" href="{{ url_for('blog.add_new_post') }}" data-nav
+   data-path="{{ url_for('blog.add_new_post') }}">Make New Post!</a>
   </div>
 </div>
 
