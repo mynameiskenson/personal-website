@@ -111,7 +111,7 @@ h1.page-title {
 
   .post-preview {
     text-align: left;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .post-link, .post-author {
@@ -171,4 +171,15 @@ h1.page-title {
 .cke_notifications_area {
         display: none !important;
     }
+
+.pagination-transparent .page-link {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: inherit; /* preserve your text color */
+}
+
+.pagination-transparent .page-item.active .page-link {
+  font-weight: bold;
+  text-decoration: underline;
+}
 

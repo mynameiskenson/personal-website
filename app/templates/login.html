@@ -7,15 +7,21 @@
 
 <div class="row mx-auto col-lg-4 col-md-6" style="text-align: left;">
     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <p class=flashes style="color:red; text-align: center;">
+    {% if messages %}
+    <p class=flashes style="color:red; text-align: center;">
         {% for message in messages %}
         {{ message }}
         {% endfor %}
-      </p>
-      {% endif %}
+    </p>
+    {% endif %}
     {% endwith %}
     {{ render_form(form) }}
-    <a href="{{ url_for('main.register') }}" class="btn btn-link" style="color:grey">Don't have an account? Register here</a>
+    <a
+            class="btn btn-link"
+            data-nav
+            data-path="{{ url_for('main.register') }}"
+            href="{{ url_for('main.register') }}" style="color:grey">
+        Don't have an account? Register here
+    </a>
 </div>
 {% endblock %}

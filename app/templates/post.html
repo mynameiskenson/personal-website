@@ -26,6 +26,35 @@
                 <hr>
                 {{ ckeditor.load() }} {{ ckeditor.config(name='body') }}
                 {{ render_form(comment_form, novalidate=True, button_map={"submit": "primary"}) }}
+                <!-- Comments list -->
+                <ul class="list-unstyled commentList mt-4">
+                    {% for comment in post.comments %}
+                    <li class="d-flex flex-column flex-sm-row align-items-start mb-4">
+                        <!-- Avatar -->
+                        <img
+                                alt="{{ comment.author.name }}’s avatar"
+                                class="rounded-circle flex-shrink-0 mb-3 mb-sm-0 me-sm-3"
+                                src="{{ gravatar_url(comment.author.email, size=48) }}"
+                                style="width:48px; height:48px;"
+                        >
+
+                        <!-- Comment body -->
+                        <div class="flex-grow-1">
+                            <strong class="mb-1 fs-5">
+                                {{ comment.text|safe }}
+                            </strong>
+                            <p class=" small mb-0 mt-2">
+                                {{ comment.author.name }}
+                                <span class="fst-italic">
+                                    on {{ comment.created_at.strftime('%b %d, %Y • %I:%M %p') }}
+                                </span>
+                            </p>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="text-center" style="color: #776d64">No comments yet. Be the first!</li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

@@ -12,3 +12,4 @@ class User(UserMixin, db.Model):
     email: Mapped[str] = mapped_column(String(250), nullable=False)
     password: Mapped[str] = mapped_column(String, nullable=False)
     posts: Mapped[List["BlogPost"]] = relationship(back_populates="author")
+    comments: Mapped[List["Comment"]] =relationship(back_populates="author")

@@ -9,11 +9,18 @@ from .extensions import db, migrate, ckeditor, bootstrap, login_manager
 from .routes.main_routes import main
 from .routes.blog_routes import blog
 
+# HELPERS
+from .helper import gravatar_url
+
 def create_app():
     load_dotenv()
 
     app = Flask(__name__)
     app.config.from_object('app.config.Config')
+
+    @app.context_processor
+    def inject_gravatar():
+        return dict(gravatar_url=gravatar_url)
 
     # INITIALIZE EXTENSIONS
     db.init_app(app)
@@ -26,6 +33,7 @@ def create_app():
     with app.app_context():
         from app.models.blog_post import BlogPost
         from app.models.user import User
+        from app.models.comment import Comment
 
     app.register_blueprint(main)
     app.register_blueprint(blog)

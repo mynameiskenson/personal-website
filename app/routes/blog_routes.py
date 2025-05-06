@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, flash
 from datetime import datetime
 
 from werkzeug.exceptions import abort
@@ -13,6 +13,7 @@ import requests
 
 # IMPORT MODELS
 from app.models.blog_post import BlogPost
+from app.models.comment import Comment
 
 blog = Blueprint("blog", __name__)
 
@@ -44,6 +45,20 @@ def get_post(post_id):
 
         _post = db.get_or_404(BlogPost, post_id)
         return render_template("post.html", post=_post, comment_form=cf)
+    else:
+        if not current_user.is_authenticated:
+            flash("You need to login or register to comment")
+            return redirect(url_for("main.login"))
+        else:
+            new_comment = Comment(
+                text=cf.comment_body.data,
+                created_at=datetime.now(),
+                author_id=current_user.id,
+                post_id=post_id
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            return  redirect(url_for("blog.get_post", post_id=post_id))
 
 @blog.route("/make-post", methods=["GET", "POST"])
 @login_required

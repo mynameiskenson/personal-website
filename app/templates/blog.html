@@ -5,30 +5,90 @@
 <p class="page-subtitle">A space for shared experiences, connection with the world, and growth.</p>
 
 <div class="row mx-auto col-lg-8 col-md-10">
-  {% for post in posts %}
-  <div class="post-preview">
-    <a href="{{ url_for('blog.get_post', post_id=post.id) }}" class="post-link" data-nav
-   data-path="{{ url_for('blog.get_post', post_id=post.id) }}">
-      <h2 class="post-title">{{ post.title }}</h2>
-      <h3 class="post-subtitle">{{ post.subtitle }}</h3>
-    </a>
-    <p class="post-meta">Posted by
-      <a href="#" class="post-author" style="color: #af3527; font-weight: bold;">{{ post.author.name }}</a>
-      on <span class="post-date" style="font-weight: bold;">{{ post.created_at.strftime('%b %d, %Y at %I:%M %p') }}</span>
-      {% if current_user.id == 1 %}
-      <a href="{{url_for('blog.delete_post', post_id=post.id)}}" style="color: grey; font-weight: bold;"><i class="bi bi-trash"></i></a>
-      {% endif %}
-    </p>
+    {% for post in pagination.items %}
+    <div class="post-preview">
+        <a class="post-link" data-nav data-path="{{ url_for('blog.get_post', post_id=post.id) }}"
+           href="{{ url_for('blog.get_post', post_id=post.id) }}">
+            <h2 class="post-title">{{ post.title }}</h2>
+            <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+        </a>
+        <p class="post-meta">Posted by
+            <a class="post-author" href="#" style="color: #af3527; font-weight: bold;">{{ post.author.name }}</a>
+            on <span class="post-date" style="font-weight: bold;">{{ post.created_at.strftime('%b %d, %Y at %I:%M %p') }}</span>
+            {% if current_user.id == 1 %}
+            <a href="{{url_for('blog.delete_post', post_id=post.id)}}" style="color: grey; font-weight: bold;"><i
+                    class="bi bi-trash"></i></a>
+            {% endif %}
+        </p>
 
-  </div>
-  {% endfor %}
+    </div>
+    {% endfor %}
 
-  <!-- Pager -->
-  <div class="clearfix">
-    <a class="btn custom-btn float-right" href="{{ url_for('blog.add_new_post') }}" data-nav
-   data-path="{{ url_for('blog.add_new_post') }}">Make New Post!</a>
-  </div>
+    {# -- PAGINATION NAV -- #}
+    <nav aria-label="Page navigation" class="mt-0 mb-2">
+        <ul class="pagination justify-content-center pagination-transparent">
+            {# Previous button #}
+            {% if pagination.has_prev %}
+            <li class="page-item">
+                <a
+                        aria-label="Previous"
+                        class="page-link"
+                        data-nav
+                        data-path="{{ url_for('main.blog', page=pagination.prev_num) }}"
+                        href="{{ url_for('main.blog', page=pagination.prev_num) }}"
+                >&laquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+            {% endif %}
+
+            {# Page numbers, with ellipses #}
+            {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if p %}
+            <li class="page-item{% if p == pagination.page %} active{% endif %}">
+                {% if p == pagination.page %}
+                <span
+                        class="page-link fw-bold text-decoration-underline"
+                >{{ p }}</span>
+                {% else %}
+            <li class="page-item">
+                <a
+                        class="page-link"
+                        data-nav
+                        data-path="{{ url_for('main.blog', page=p) }}"
+                        href="{{ url_for('main.blog', page=p) }}"
+                >{{ p }}</a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">…</span></li>
+            {% endif %}
+            {% endfor %}
+
+            {# Next button #}
+            {% if pagination.has_next %}
+            <li class="page-item">
+                <a
+                        aria-label="Next"
+                        class="page-link"
+                        data-nav
+                        data-path="{{ url_for('main.blog', page=pagination.next_num) }}"
+                        href="{{ url_for('main.blog', page=pagination.next_num) }}"
+                >&raquo;</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    {% if current_user.id == 1 %}
+    <div class="clearfix">
+        <a class="btn custom-btn float-right" data-nav data-path="{{ url_for('blog.add_new_post') }}"
+           href="{{ url_for('blog.add_new_post') }}">Make New Post!</a>
+    </div>
+    {% endif %}
 </div>
 
-  <hr>
+<hr>
 {% endblock %}

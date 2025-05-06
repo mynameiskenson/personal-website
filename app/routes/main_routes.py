@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, url_for
-from sqlalchemy import select
+from sqlalchemy import select, desc
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
 from flask_login import login_user, current_user, logout_user, login_required
@@ -34,9 +34,10 @@ def blog():
     # result.raise_for_status()
     # _posts = result.json()
 
-    result = db.session.execute(db.select(BlogPost))
-    _posts = result.scalars().all()
-    return render_template("blog.html", posts=_posts)
+    page = request.args.get("page", 1, type=int)
+    result = db.session.query(BlogPost).order_by(desc(BlogPost.created_at))
+    pagination = result.paginate(page=page, per_page=3, error_out=False)
+    return render_template("blog.html", pagination=pagination)
 
 @main.route("/login", methods=["GET", "POST"])
 def login():
